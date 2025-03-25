@@ -89,7 +89,7 @@ export function ProductCard({
       <div className="p-4">
         <div className="flex justify-between items-start mb-1">
           <h3 className="font-medium">{name}</h3>
-          <span className="font-medium">${price.toFixed(2)}</span>
+          <span className="font-medium">₹{(price * 83).toFixed(0)}</span>
         </div>
         <p className="text-sm text-gray-500 mb-2">{description}</p>
         <div className="text-xs font-medium text-gray-400 uppercase tracking-wide">
