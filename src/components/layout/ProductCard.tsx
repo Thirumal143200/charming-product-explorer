@@ -1,8 +1,9 @@
 
 import { useState } from 'react';
-import { Plus, Eye } from 'lucide-react';
+import { Plus, Eye, ShoppingCart } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { cn } from '@/lib/utils';
+import { useCart } from '@/contexts/CartContext';
 
 export interface ProductProps {
   id: string;
@@ -25,6 +26,11 @@ export function ProductCard({
 }: ProductProps) {
   const [isHovering, setIsHovering] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart({ id, name, description, price, image, category, isNew });
+  };
 
   return (
     <div 
@@ -71,8 +77,9 @@ export function ProductCard({
             size="icon" 
             className="bg-white hover:bg-white text-black rounded-full w-10 h-10"
             aria-label="Add to cart"
+            onClick={handleAddToCart}
           >
-            <Plus className="h-4 w-4" />
+            <ShoppingCart className="h-4 w-4" />
           </Button>
           <Button 
             size="icon" 
