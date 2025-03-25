@@ -1,8 +1,10 @@
 
 import { useState, useEffect } from 'react';
-import { Search, ShoppingCart, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { cn } from '@/lib/utils';
+import { CartButton } from './CartButton';
+import SearchCommand from './SearchCommand';
 
 const navItems = [
   { name: 'Home', href: '#' },
@@ -25,6 +27,14 @@ export function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleShopNowClick = () => {
+    // Scroll to the products section
+    const productsSection = document.getElementById('products');
+    if (productsSection) {
+      productsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <header 
@@ -58,13 +68,12 @@ export function Header() {
         
         {/* Action Buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <Button variant="ghost" size="icon" aria-label="Search">
-            <Search className="h-5 w-5" />
-          </Button>
-          <Button variant="ghost" size="icon" aria-label="Cart">
-            <ShoppingCart className="h-5 w-5" />
-          </Button>
-          <Button className="rounded-full px-4 py-2 transition-all duration-300 hover:shadow-button">
+          <SearchCommand />
+          <CartButton />
+          <Button 
+            className="rounded-full px-4 py-2 transition-all duration-300 hover:shadow-button"
+            onClick={handleShopNowClick}
+          >
             Shop Now
           </Button>
         </div>
@@ -100,13 +109,15 @@ export function Header() {
               </a>
             ))}
             <div className="flex items-center space-x-4 pt-2">
-              <Button variant="ghost" size="icon" aria-label="Search">
-                <Search className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" aria-label="Cart">
-                <ShoppingCart className="h-5 w-5" />
-              </Button>
-              <Button className="rounded-full w-full">
+              <SearchCommand />
+              <CartButton />
+              <Button 
+                className="rounded-full w-full"
+                onClick={() => {
+                  handleShopNowClick();
+                  setIsMobileMenuOpen(false);
+                }}
+              >
                 Shop Now
               </Button>
             </div>
